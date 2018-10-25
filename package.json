@@ -1,0 +1,24 @@
+{
+  "name": "AMFY-CLI",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amfyWebService/AMFY-CLI.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amfyWebService/AMFY-CLI/issues"
+  },
+  "homepage": "https://github.com/amfyWebService/AMFY-CLI#readme",
+  "devDependencies": {
+    "@types/node": "^10.12.0",
+    "typescript": "^3.1.3"
+  }
+}
