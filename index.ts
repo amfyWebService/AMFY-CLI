@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-import commander from 'commander';
-import GitUtils from './utils/GitUtils'
-import FilesUtils from './utils/FilesUtils'
+import * as commander from 'commander';
+import GitUtils from './src/utils/GitUtils'
+import FilesUtils from './src/utils/FilesUtils'
 
 
 console.log(__dirname);
