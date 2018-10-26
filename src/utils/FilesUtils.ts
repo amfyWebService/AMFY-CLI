@@ -1,4 +1,4 @@
-import {Decoder, object, string, optional, number, boolean} from '../node_modules/@mojotech/json-type-validation'
+import {Decoder, object, string, optional, number, boolean} from '@mojotech/json-type-validation'
 import {iChangingValues} from "./utilsclass/iChangingValue"
 import fs from "fs"
 import { COPYFILE_EXCL } from "constants";
