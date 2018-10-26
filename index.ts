@@ -34,7 +34,7 @@ import fs from 'fs';
 //     console.log('renamed complete');
 //   });
 // }
-
+//
 // renameFile('./AMFY-CLI/index.ts','./AMFY-CLI/toto.ts');
 
 // const oldFile = path.substring(path.lastIndexOf("/")+1, path.length); 
