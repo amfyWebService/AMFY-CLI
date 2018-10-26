@@ -4,7 +4,7 @@ import fs from "fs"
 import { COPYFILE_EXCL } from "constants";
 import {TypeTemplate} from "./utilsclass/TypeTemplate"
 import {ChangingValue} from "./utilsclass/ChangingValue"
-class FilesUtils
+export default class FilesUtils
 {
     static  decoderValueTochange: Decoder<iChangingValues> = object({
         toReplace: string(),
@@ -43,5 +43,15 @@ class FilesUtils
                 if (err) throw new Error("Can't write file : " + fullPathDest)
             });
           });    
+    }
+
+    static async rename(oldPath: string, newName: string){
+        let tabPath = oldPath.split("/")
+        tabPath.pop()
+        let newPath = tabPath.join('/')+'/'+newName
+        await fs.rename(oldPath, newPath, (err) => {
+            if (err) throw err;
+            console.log('renamed complete');
+        });
     }
 }
