@@ -35,6 +35,7 @@ export default class FilesUtils
             let fileText: string = data.toString()
             await listOfTag.map((obj)=>
             {
+                // TODO: change replace by regex : var re = new RegExp("^{{\\s* test\\s*\\}}"); where test is the word we search
                 fileText = fileText.replace(obj.toReplace, obj.replacer)
             })
                 
@@ -53,5 +54,17 @@ export default class FilesUtils
             if (err) throw err;
             console.log('renamed complete');
         });
+    }
+
+    static getDirectoryList(path: string, listException? : Array<string>): Array<string>
+    {
+        
+        let listDir = fs.readdirSync(path)
+        console.log(listDir)
+        if(listException != undefined && listException.length > 0)
+        {
+            
+        }
+        return []
     }
 }

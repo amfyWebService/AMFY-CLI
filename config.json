@@ -1,0 +1,14 @@
+{
+    "Exclude":
+    {
+        "directory":
+        [
+            "bin",
+            ".git"
+        ],
+        "files":
+        [
+            ".gitignore"
+        ]
+    }
+}
