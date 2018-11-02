@@ -17,10 +17,10 @@ export default class FilesUtils
 * fullPathDest : Path where the file has to be copied exemple : __diname"/myDest/"
 * template : enum of the type of template to copy
 */
-    static async createFileFromTemplate(extension: string , name : string , fullPathSrc: string, fullPathDest : string , template : TypeTemplate)
+    static async createFileFromTemplate(fullPathSrc: string, fullPathDest : string )
     {
         
-        fs.copyFile(fullPathSrc+"../template/"+template , fullPathDest + name + "." +extension , COPYFILE_EXCL ,(err : Error)=>
+        fs.copyFile(fullPathSrc, fullPathDest , COPYFILE_EXCL ,(err : Error)=>
         {
             if(err) throw new Error("Can't copy file from template to : "+ fullPathDest)
         })      
