@@ -22,7 +22,7 @@ export default class FilesUtils
         
         fs.copyFile(fullPathSrc, fullPathDest , COPYFILE_EXCL ,(err : Error)=>
         {
-            if(err) throw new Error("Can't copy file from template to : "+ fullPathDest)
+            if(err) console.log(err)
         })      
     }
 

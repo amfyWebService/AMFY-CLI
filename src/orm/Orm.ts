@@ -24,6 +24,8 @@ export class Orm {
 
                     entityName = obj.entityName;
                 }
+        commander
+            .command('toto', 'Generator model');
 
                 let entity    : IEntity;
                 let properties: IEntityProperties[] = [];
