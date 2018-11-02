@@ -14,7 +14,7 @@ export class Orm {
 
 
         commander
-            .command('add', 'Generator model');
+            .command('toto', 'Generator model');
 
 
         commander.parse(process.argv);
