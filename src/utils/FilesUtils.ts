@@ -17,28 +17,30 @@ export default class FilesUtils
 * fullPathDest : Path where the file has to be copied exemple : __diname"/myDest/"
 * template : enum of the type of template to copy
 */
-    static async createFileFromTemplate(fullPathSrc: string, fullPathDest : string )
+    static createFileFromTemplate(fullPathSrc: string, fullPathDest : string )
     {
         
-        fs.copyFile(fullPathSrc, fullPathDest , COPYFILE_EXCL ,(err : Error)=>
+        let test = fs.copyFileSync(fullPathSrc, fullPathDest , COPYFILE_EXCL)   
+        if(test != undefined)
         {
-            if(err) console.log(err)
-        })      
+            console.log("Cant copy files")
+            process.exit()
+        }
     }
 
 
     static async replaceTag(listOfTag : Array<ChangingValue> , fullPathDest : string)
     {
         await fs.readFile(fullPathDest, async function(err : any, data : Buffer) {
-            if (err) throw new Error("Can't open file : "+ fullPathDest)
+            if (err) console.log(err)
     
             let fileText: string = data.toString()
-            await listOfTag.map((obj)=>
+            listOfTag.map((obj)=>
             {
-                // TODO: change replace by regex : var re = new RegExp("^{{\\s* test\\s*\\}}"); where test is the word we search
-                fileText = fileText.replace(obj.toReplace, obj.replacer)
-            })
+                var re = new RegExp("^{{\\s*"+obj.toReplace+"\\s*\\}}");
+                fileText = fileText.replace(re,obj.replacer)
                 
+            })
             await fs.writeFile(fullPathDest, fileText, (err :Error)=>
             {
                 if (err) throw new Error("Can't write file : " + fullPathDest)
