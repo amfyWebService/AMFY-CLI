@@ -9,6 +9,9 @@ import { TypeTemplate } from './src/utils/utilsclass/TypeTemplate'
 import { COPYFILE_EXCL } from 'constants';
 import { cpus } from 'os';
 import { isNull } from 'util';
+import { Exports } from './src/utils/Exports';
+import * as archiver  from 'archiver'
+
 
 const listOfTemplateVar: Array<Object> = [{ "salut": "test" }]
 const listOfFolders: Array<string> = ["\\models", "\\controller"]
@@ -21,6 +24,20 @@ async function init() {
   commander
     .version("0.1.0");
   
+commander.command("export")
+          .description("Export file ")
+          .option("-n, --name <value>", "name of the archive")
+          .option("--tar")
+          .option("--zip")
+          .action(function(args)
+          {
+            let type : archiver.Format = args.tar ? "tar" : "zip"
+            let name : string = args.name ? args.name : "exportApp"
+            let exp : Exports = new Exports()
+            exp.exportToServer(name,type)
+            
+          })
+
   commander.command("init <projectName>")
     .description('Model generator')
     .option("-w, --withcontroller <controllerName>")
@@ -51,8 +68,7 @@ function createController(name: string, isInit : boolean = false , projectname :
       : process.cwd() + pathControllerDir + name + '.ts'
 
     let src: string = pathControllerTemplate
-      
-
+    
     FilesUtils.createFileFromTemplate(src, destination)
     let listTag: Array<ChangingValue> = setListOfTag()
     FilesUtils.replaceTag(listTag, destination)
@@ -62,37 +78,6 @@ function createController(name: string, isInit : boolean = false , projectname :
     process.exit()
   }
 }
-
-// function createController(name: string) {
-//   console.log(process.cwd() + pathControllerDir)
-//   console.log(process.cwd() + pathControllerTemplate)
-
-
-//   if (fs.existsSync(process.cwd() + pathControllerDir) && fs.existsSync(process.cwd() + pathControllerTemplate)) {
-    
-//     let destination: string
-//     let src: string
-
-//     if (commander.init) {
-//       destination = process.cwd() + "/" + commander.projectname + pathControllerDir + name + '.ts'
-//       src = process.cwd() + "/" + commander.projectname + pathControllerTemplate 
-//     } else {
-//       destination = process.
-//       cwd() + pathControllerDir + name + '.ts'
-//       src = process.cwd() + pathControllerTemplate 
-//     }
-
-//     console.log(destination)
-//     console.log(src)
-
-//     FilesUtils.createFileFromTemplate(src, destination)
-//     let listTag: Array<ChangingValue> = setListOfTag()
-//     FilesUtils.replaceTag(listTag, destination)
-//   } else {
-//     console.log("Cannot find '/controller' Directory or '/template/templateController.ts' , are you sure that you are in AMFY project ?")
-//     process.exit()
-//   }
-// }
 
 function setListOfTag(): Array<ChangingValue> {
   let toReturn: Array<ChangingValue> = []

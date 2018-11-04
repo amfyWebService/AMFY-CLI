@@ -1,9 +1,10 @@
 import {Decoder, object, string, optional, number, boolean} from '@mojotech/json-type-validation'
 import {iChangingValues} from "./utilsclass/iChangingValue"
-import fs from "fs"
+import fs, { readdirSync } from "fs"
 import { COPYFILE_EXCL } from "constants";
 import {TypeTemplate} from "./utilsclass/TypeTemplate"
 import {ChangingValue} from "./utilsclass/ChangingValue"
+import archiver = require('archiver');
 export default class FilesUtils
 {
     static  decoderValueTochange: Decoder<iChangingValues> = object({
@@ -39,7 +40,6 @@ export default class FilesUtils
             {
                 var re = new RegExp("^{{\\s*"+obj.toReplace+"\\s*\\}}");
                 fileText = fileText.replace(re,obj.replacer)
-                
             })
             await fs.writeFile(fullPathDest, fileText, (err :Error)=>
             {
@@ -58,15 +58,43 @@ export default class FilesUtils
         });
     }
 
-    static getDirectoryList(path: string, listException? : Array<string>): Array<string>
+
+    // only handle one directory and doesnt include subdirectory
+    static getDirectoryListForBuild(path: string, listException? : Array<string>): Array<string>
     {
-        
+        let freshList : Array<string> = []
         let listDir = fs.readdirSync(path)
-        console.log(listDir)
+       
         if(listException != undefined && listException.length > 0)
         {
-            
+            for(var i = 0; i< listDir.length;i++)
+            {
+                if(listException.indexOf(listDir[i]) == -1)
+                {
+                    freshList.push(listDir[i])
+                }
+            }
         }
-        return []
+        return freshList;
+    }
+
+    static async createArchive(fullPath: string, listDir: Array<string>, archiveName : string, typeArchive: archiver.Format ) 
+    {
+        var output = fs.createWriteStream(process.cwd() + '/'+archiveName+"."+typeArchive);
+        var archive = archiver(typeArchive, 
+        {
+            zlib: { level: 9 } // Sets the compression level.
+        });
+        output.on('close', function() {
+            console.log('Archive has been created');
+            process.exit();
+          });
+
+          await archive.pipe(output)
+          let test  = await listDir.map(function(element)
+          {
+            archive.glob(element)
+          })
+          archive.finalize()
     }
 }

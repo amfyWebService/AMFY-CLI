@@ -4,11 +4,13 @@
         "directory":
         [
             "bin",
-            ".git"
+            ".git",
+            "node_modules"
         ],
         "files":
         [
-            ".gitignore"
+            ".gitignore",
+            "tsconfig.json"
         ]
     }
 }

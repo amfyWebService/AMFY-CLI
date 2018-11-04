@@ -1,9 +1,12 @@
 import * as fs from "fs"
 import FilesUtils from "./FilesUtils";
+import archiver = require("archiver");
 
-class Exports
+export class Exports
 {
-    excludedFiles : Array<string> = new Array<string>()
+    excludedDir : Array<string> = new Array<string>()
+    excludedFile : Array<string> = new Array<string>()
+
     constructor()
     {
         
@@ -11,33 +14,21 @@ class Exports
         {
             let output = fs.readFileSync(process.cwd()+"/config.json")
             let salut = JSON.parse(output.toString())
-            console.log(salut.Exclude.directory)
-            for(let i = 0; i< salut.Exclude.length;i++)
-            {
-                this.excludedFiles.push(salut.Exclude[i])
-            }
-            
+            this.excludedDir = salut.Exclude.directory
+            this.excludedFile = salut.Exclude.files
         }
         catch(err)
         {
             console.log("cannot find file " + process.cwd()+"/config.json")
-            process.exit()
         }          
     }
-
-    exportTodocker()
+    private getAllExcludedFiles(): Array<string>
     {
-        
-       let listDir : Array<string> =  FilesUtils.getDirectoryList(process.cwd()+"/",this.excludedFiles)
-
+        return this.excludedDir.concat(this.excludedFile)
     }
-    exportToServer()
+    public exportToServer( archiveName : string = "exportApp", typeArchive: archiver.Format): void
     {
-
+        FilesUtils.createArchive(process.cwd(),FilesUtils.getDirectoryListForBuild(process.cwd()+"/",this.getAllExcludedFiles()), archiveName, typeArchive)
     }
     
 } 
-
-let test = new Exports()
-console.log(test.excludedFiles)
-//test.exportTodocker()
