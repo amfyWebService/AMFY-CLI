@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import commander from 'commander'
+import * as commander from "commander"
 import GitUtils from './src/utils/GitUtils'
 import FilesUtils from './src/utils/FilesUtils'
 import * as fs from "fs"
@@ -20,16 +20,15 @@ const pathControllerTemplate = __dirname+"\\template\\controllerTemplate.ts"
 const pathControllerDir = "\\"
 const cloneOpts = {};
 
+
 async function init() {
-  commander
-    .version("0.1.0");
-  
-commander.command("export")
+  let command : any  = new commander.Command()
+command.command("export")
           .description("Export file ")
           .option("-n, --name <value>", "name of the archive")
           .option("--tar")
           .option("--zip")
-          .action(function(args)
+          .action(function(args : any)
           {
             let type : archiver.Format = args.tar ? "tar" : "zip"
             let name : string = args.name ? args.name : "exportApp"
@@ -38,22 +37,22 @@ commander.command("export")
             
           })
 
-  commander.command("init <projectName>")
+  command.command("init <projectName>")
     .description('Model generator')
     .option("-w, --withcontroller <controllerName>")
-    .action(async (projectName , options) => {
+    .action(async (projectName: any , options: any) => {
       await GitUtils.clone(url, projectName, cloneOpts) // cut the execution if failed , no need to handle error, we want this behaviour
       if(options.withcontroller) createController(options.withcontroller , true , projectName)
     });
 
-  commander.command("add")
+  command.command("add")
     .description('add controller')
     .option("-n, --name <templateName>")
-    .action(async (templateName) => {
+    .action(async (templateName : any) => {
       await createController(templateName)
     });
 
-  commander.parse(process.argv);
+  command.parse(process.argv);
 }
 
 /*

@@ -89,7 +89,6 @@ export default class FilesUtils
             console.log('Archive has been created');
             process.exit();
           });
-
           await archive.pipe(output)
           let test  = await listDir.map(function(element)
           {

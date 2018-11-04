@@ -1,6 +1,6 @@
 import * as fs from "fs"
 import FilesUtils from "./FilesUtils";
-import archiver = require("archiver");
+import * as archiver from "archiver"
 
 export class Exports
 {
@@ -9,7 +9,6 @@ export class Exports
 
     constructor()
     {
-        
         try
         {
             let output = fs.readFileSync(process.cwd()+"/config.json")
