@@ -21,7 +21,7 @@ To init a blanck project follow these steps
 
 You need to launch the following command
 ```
-amfy init 
+amfy init my-app
 ```
 The command will generate the following architecture 
 
@@ -49,7 +49,9 @@ my-app
 ## AMFY Commands :clipboard:
 | Command | Description |
 |---|---|
-| ```amfy init``` | Create a blanck nodejs project in TypeScript |
+| ```amfy init appName``` | Create a blanck nodejs project in TypeScript |
+|```amfy export -n <value>```| Export file |
+|```amfy add -n <templateName>```| Add controller |
 | ```amfy orm add entityName``` | Generate an entity |
 
 
