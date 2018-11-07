@@ -20,12 +20,14 @@ export default class FilesUtils
 */
     static createFileFromTemplate(fullPathSrc: string, fullPathDest : string )
     {
-        
-        let test = fs.copyFileSync(fullPathSrc, fullPathDest , COPYFILE_EXCL)   
-        if(test != undefined)
+        try
+        { 
+            let test = fs.copyFileSync(fullPathSrc, fullPathDest , COPYFILE_EXCL)   
+        }
+        catch(err)
         {
-            console.log("Cant copy files")
-            process.exit()
+            if(!fs.existsSync(fullPathSrc)) console.log("Can't find : "+ fullPathSrc)
+            if(fs.existsSync(fullPathDest)) console.log(fullPathDest+" already exists, can't override this file")
         }
     }
 
@@ -38,8 +40,11 @@ export default class FilesUtils
             let fileText: string = data.toString()
             listOfTag.map((obj)=>
             {
-                var re = new RegExp("^{{\\s*"+obj.toReplace+"\\s*\\}}");
+                console.log(obj)
+                var re = new RegExp("\\{\\{\\s*"+obj.toReplace+"\\s*\\}\\}")
+               
                 fileText = fileText.replace(re,obj.replacer)
+                
             })
             await fs.writeFile(fullPathDest, fileText, (err :Error)=>
             {
@@ -90,7 +95,7 @@ export default class FilesUtils
             process.exit();
           });
           await archive.pipe(output)
-          let test  = await listDir.map(function(element)
+          await listDir.map(function(element)
           {
             archive.glob(element)
           })

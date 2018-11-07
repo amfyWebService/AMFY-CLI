@@ -12,9 +12,9 @@ export class Exports
         try
         {
             let output = fs.readFileSync(process.cwd()+"/config.json")
-            let salut = JSON.parse(output.toString())
-            this.excludedDir = salut.Exclude.directory
-            this.excludedFile = salut.Exclude.files
+            let myJson = JSON.parse(output.toString())
+            this.excludedDir = myJson.Exclude.directory
+            this.excludedFile = myJson.Exclude.files
         }
         catch(err)
         {
