@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+console.log("ok")
 import * as commander from "commander"
 import GitUtils from './src/utils/GitUtils'
 import FilesUtils from './src/utils/FilesUtils'
@@ -53,6 +53,7 @@ command.command("export")
     });
 
   command.parse(process.argv);
+
 }
 
 /*
