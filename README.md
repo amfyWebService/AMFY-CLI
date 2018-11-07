@@ -49,8 +49,8 @@ my-app
 ## AMFY Commands :clipboard:
 | Command | Description |
 |---|---|
-| ```bash amfy init``` | Create a blanck nodejs project in TypeScript |
-| ```bash amfy orm add entityName``` | Generate an entity |
+| ```amfy init``` | Create a blanck nodejs project in TypeScript |
+| ```amfy orm add entityName``` | Generate an entity |
 
 
 ## Authors :space_invader:
