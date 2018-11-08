@@ -1,8 +1,9 @@
-import * as fs from "fs"
+import * as fs from "fs";
 import FilesUtils from "./FilesUtils";
-import * as archiver from "archiver"
+import * as archiver from "archiver";
+import path from "path";
 
-const pathConfig : string = process.cwd()+"\\config\\config.json"
+const pathConfig : string = path.join(process.cwd(), "config", "exportIgnore.json");
 
 export class Exports
 {
