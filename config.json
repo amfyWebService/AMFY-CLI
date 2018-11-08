@@ -1,0 +1,16 @@
+{
+    "Exclude":
+    {
+        "directory":
+        [
+            "bin",
+            ".git",
+            "node_modules"
+        ],
+        "files":
+        [
+            ".gitignore",
+            "tsconfig.json"
+        ]
+    }
+}

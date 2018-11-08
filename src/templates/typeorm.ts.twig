@@ -1,0 +1,42 @@
+{# Functions #}
+{% import _self as fn %}
+{% macro columnOption(prop) %}
+{% spaceless %}
+    {% if prop.type == 'double' or prop.type == 'text' %}
+        "{{prop.type}}"
+
+        {% if prop.lenght %}
+            , 
+        {% endif %}
+    {% endif %}
+
+    {% if prop.lenght %}
+        {length: {{prop.length}}}
+    {% endif %}
+{% endspaceless %}
+{% endmacro %}
+{% macro propType(type) %}
+{% spaceless %}
+    {% if type == "double" %}
+        number
+    {% elseif type == "text" %}
+        string
+    {% else %}
+        {{type}}
+    {% endif %}
+{% endspaceless %}
+{% endmacro %}
+import {Entity, Column, PrimaryGeneratedColumn} from "typeorm";
+
+@Entity()
+export class {{entityName}} {
+
+    @PrimaryGeneratedColumn()
+    id: number;
+    {% for prop in properties %}
+
+    @Column({{fn.columnOption(prop)}})
+    {{prop.name}}: {{fn.propType(prop.type)}};
+    {% endfor %}
+
+}

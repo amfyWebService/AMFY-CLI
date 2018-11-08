@@ -1,10 +1,14 @@
 {
-  "name": "AMFY-CLI",
+  "name": "amfy-cli",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "main": "bin/cli.js",
   "bin": {
-    "myCommand": "index.ts"
+    "amfy": "bin/cli.js"
+  },
+  "scripts": {
+    "start": "ts-node index.ts",
+    "orm": "ts-node src/orm/Orm.ts"
   },
   "repository": {
     "type": "git",
@@ -18,17 +22,29 @@
   },
   "homepage": "https://github.com/amfyWebService/AMFY-CLI#readme",
   "devDependencies": {
+    "@mojotech/json-type-validation": "^2.0.0",
+    "@types/archiver": "^2.1.2",
     "@types/commander": "^2.12.2",
-    "@types/node": "^10.12.0",
+    "@types/fs-extra": "^5.0.4",
+    "@types/glob": "^7.1.1",
+    "@types/inquirer": "0.0.43",
+    "@types/node": "^10.12.2",
+    "@types/nodegit": "^0.22.3",
+    "@types/twig": "^1.12.1",
+    "config": "^2.0.1",
     "typescript": "^3.1.3"
   },
   "dependencies": {
-    "@mojotech/json-type-validation": "^2.0.0",
+    "archiver": "^3.0.0",
+    "change-case": "^3.0.2",
     "commander": "^2.19.0",
-    "@types/nodegit": "^0.22.3",
-    "fs": "0.0.1-security",
+    "fs-extra": "^7.0.1",
     "git-clone": "^0.1.0",
+    "glob": "^7.1.3",
+    "inquirer": "^6.2.0",
     "nodegit": "^0.23.0",
-    "ts-node": "^7.0.1"
+    "path": "^0.12.7",
+    "ts-node": "^7.0.1",
+    "twig": "^1.12.0"
   }
 }
