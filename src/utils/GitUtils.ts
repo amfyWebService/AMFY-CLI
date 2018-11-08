@@ -4,7 +4,7 @@ export default class GitUtils
 {
     static async clone(url : string, fileName : string, cloneOpts : {}, message: string = "Project has been created")
     {   
-        const local = ".\\"+fileName
+        const local = path.join("./", fileName);
         await nodegit.Clone.clone(url, local, cloneOpts).then(async function (repo) {
         console.log(message);
         }).catch(function (err) {

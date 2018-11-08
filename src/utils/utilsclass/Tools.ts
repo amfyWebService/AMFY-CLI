@@ -1,4 +1,4 @@
-import fs from 'fs';
+import * as fs from 'fs';
 import { exec } from 'child_process';
 import path from 'path';
 
@@ -51,9 +51,8 @@ export class Tools {
             return tmp;
         } else { // use the built-in template
             const templateNameTolook = cliTemplateName ? this.normalizeTemplate(cliTemplateName) : this.normalizeTemplate(templateName);
-            let tmp = path.join(appRootPath, this.CLI_TEMPLATE_RELATIVE_PATH, templateNameTolook);
+            let tmp = path.join(Tools.getCliRooPath(), this.CLI_TEMPLATE_RELATIVE_PATH, templateNameTolook);
 
-            console.log(tmp, appRootPath, this.CLI_TEMPLATE_RELATIVE_PATH, templateNameTolook);
             if (fs.existsSync(tmp)) {
                 return tmp;
             }

@@ -1,6 +1,7 @@
 import commander from "commander";
-import inquirer from 'inquirer'
+import inquirer from 'inquirer';
 import { IEntity, IEntityPropertiesType, IEntityProperties } from "./utils/IEntity";
+import { EntityGenerator } from "./utils/EntityGenerator";
 export class Orm {
     constructor() {
         this.addEntity()
@@ -9,7 +10,7 @@ export class Orm {
 
     public addEntity() {
         commander
-            .command('add [entityName]')
+            .command('orm-add [entityName]')
             .description('Entity generator')
             .action(async (entityName) => {
                 if (!entityName) {
@@ -24,8 +25,6 @@ export class Orm {
 
                     entityName = obj.entityName;
                 }
-        commander
-            .command('toto', 'Generator model');
 
                 let entity    : IEntity;
                 let properties: IEntityProperties[] = [];
@@ -70,8 +69,8 @@ export class Orm {
                     entityName,
                     properties
                 }
-                console.log(entity)
-                // TODO: call generator
+                
+                EntityGenerator.generate(entity);
             });
 
     }

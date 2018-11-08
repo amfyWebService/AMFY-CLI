@@ -1,17 +1,9 @@
-import { Decoder, object, string, optional, number, boolean } from '@mojotech/json-type-validation';
-import { iChangingValues } from "./utilsclass/iChangingValue";
 import fs from "fs";
 import { COPYFILE_EXCL } from "constants";
-import { TypeTemplate } from "./utilsclass/TypeTemplate";
-import { ChangingValue } from "./utilsclass/ChangingValue";
 import Twig from 'twig';
-import { resolve } from 'dns';
+import archiver = require('archiver');
 
 export default class FilesUtils {
-    static decoderValueTochange: Decoder<iChangingValues> = object({
-        toReplace: string(),
-        replacer: string()
-    })
 
     /**
      * @param fullPathSrc Path of the src file exemple : __dirname+"/myTemplate.ts"
@@ -26,7 +18,6 @@ export default class FilesUtils {
                     reject(new Error("Can't copy file from template to : " + fullPathDest));
 
                 if (listOfTag) {
-                    console.log(listOfTag)
                     await this.replaceTag(listOfTag, fullPathDest);
                 }
 
