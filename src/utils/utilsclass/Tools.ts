@@ -50,7 +50,7 @@ export class Tools {
         if (fs.existsSync(tmp)) {
             return tmp;
         } else { // use the built-in template
-            const templateNameTolook = cliTemplateName ? this.normalizeTemplate(cliTemplateName) : this.normalizeTemplate(templateName);
+            const templateNameTolook = cliTemplateName ? this.normalizeTemplate(cliTemplateName) : templateName;
             let tmp = path.join(Tools.getCliRooPath(), this.CLI_TEMPLATE_RELATIVE_PATH, templateNameTolook);
 
             if (fs.existsSync(tmp)) {
@@ -62,6 +62,7 @@ export class Tools {
     }
 
     private static normalizeTemplate(name: string) {
-        return path.extname(name) ? name : name + '.ts.twig';
+        // return path.extname(name) ? name : name + '.ts.twig';
+        return name + '.ts.twig';
     }
 }

@@ -1,0 +1,9 @@
+import { App } from "./src/core/App";
+import * as config from "config";
+import {createConnection} from "typeorm";
+
+let ormConfig = config.get('orm');
+
+createConnection(ormConfig).then(connection => {
+    new App().start();
+}).catch(error => console.log(error));

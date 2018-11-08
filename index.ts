@@ -11,9 +11,6 @@ import { Orm } from "./src/orm/Orm";
 
 const url: string = "https://github.com/amfyWebService/AMFY"
 
-const optionsBasePull: object = { checkoutBranch: "develop" };
-
-
 async function init() {
     let command: any = new commander.Command()
     command.command("export")
@@ -33,7 +30,7 @@ async function init() {
         .description('Model generator')
         .option("-w, --withcontroller <controllerName>")
         .action(async (projectName: any, options: any) => {
-            await GitUtils.clone(url, projectName, optionsBasePull) // cut the execution if failed , no need to handle error, we want this behaviour
+            await GitUtils.clone(url, projectName, {}) // cut the execution if failed , no need to handle error, we want this behaviour
 
             if (options.withcontroller)
                 ControllerGenerator.createController(options.withcontroller, true, projectName)
