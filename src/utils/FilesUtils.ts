@@ -28,6 +28,7 @@ export default class FilesUtils {
                     await this.replaceTag(listOfTag, fullPathDest);
                 }
 
+                console.log('The file', path.basename(fullPathDest) ,'has been created');
                 resolve();
             });
         });

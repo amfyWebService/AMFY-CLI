@@ -30,10 +30,10 @@ export class EntityGenerator {
 
     public static async getOrm(): Promise<string> {
         const appRootPath = await Tools.getAppRootPath();
-        const configPath = '/config/default.json';
+        const configPath = '/config/default.js';
 
-        if (fs.existsSync(appRootPath + configPath)) {
-            const config = require(appRootPath + configPath);
+        if (fs.existsSync(path.join(appRootPath, configPath))) {
+            const config = require(path.join(appRootPath, configPath));
 
             if (config.orm) {
                 if (config.orm.ormType) {

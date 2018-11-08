@@ -12,7 +12,7 @@ export class Orm {
             .command('orm-add [entityName]')
             .description('Entity generator')
             .action(async (entityName) => {
-                console.log("ok")
+            
                 if (!entityName) {
                     
                     const obj: any = await inquirer.prompt([
@@ -70,7 +70,7 @@ export class Orm {
                     entityName,
                     properties
                 }
-                console.log(entity)
+                
                 EntityGenerator.generate(entity);
             });
 
