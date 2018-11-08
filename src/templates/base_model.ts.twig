@@ -1,20 +1,23 @@
-export class {{entityName}} {
-
-    id: number;
-
-    {% for prop in properties %}
-    
-        {{prop.name}}: {{propType(prop.type)}};
-
-    {% endfor %}
-}
-
+{# Functions #}
+{% import _self as fn %}
 {% macro propType(type) %}
-    {% if(type == 'double') %}
+{% spaceless %}
+    {% if type == "double" %}
         number
-    {% elseif(prop.type == 'text') %}
+    {% elseif type == "text" %}
         string
     {% else %}
         {{type}}
     {% endif %}
+{% endspaceless %}
 {% endmacro %}
+
+export class {{entityName}} {
+
+    id: number;
+    {% for prop in properties %}
+
+    {{prop.name}}: {{fn.propType(prop.type)}};
+    {% endfor %}
+
+}

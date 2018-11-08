@@ -2,6 +2,7 @@ import fs from "fs";
 import { COPYFILE_EXCL } from "constants";
 import Twig from 'twig';
 import archiver = require('archiver');
+import path from "path";
 
 export default class FilesUtils {
 
@@ -12,13 +13,16 @@ export default class FilesUtils {
      */
     static async createFileFromTemplate(fullPathSrc: string, fullPathDest: string, listOfTag?: any) {
         return new Promise((resolve, reject) => {
+            let dirDest = path.dirname(fullPathDest);
+
+            if(!fs.existsSync(dirDest))
+                fs.mkdirSync(dirDest);
 
             fs.copyFile(fullPathSrc, fullPathDest, COPYFILE_EXCL, async (err: Error) => {
-                if (err)
-                    {
-                        console.log(fullPathSrc)
+                if (err) {
                     reject(new Error("Can't copy file from template to : " + fullPathDest));
-                    }
+                    return;
+                }
 
                 if (listOfTag) {
                     await this.replaceTag(listOfTag, fullPathDest);
@@ -34,13 +38,13 @@ export default class FilesUtils {
         return new Promise((resolve, reject) => {
             Twig.renderFile(fullPathDest, JSON.parse(JSON.stringify(listOfTag)), (err, html) => {
                 if (err) reject(new Error("Can't open file : " + fullPathDest));
-    
+
                 fs.writeFile(fullPathDest, html, (err: Error) => {
                     if (err) reject(new Error("Can't write file : " + fullPathDest));
 
                     resolve();
                 });
-              });
+            });
         })
     }
 
@@ -56,17 +60,13 @@ export default class FilesUtils {
 
 
     // only handle one directory and doesnt include subdirectory
-    static getDirectoryListForBuild(path: string, listException? : Array<string>): Array<string>
-    {
-        let freshList : Array<string> = []
+    static getDirectoryListForBuild(path: string, listException?: Array<string>): Array<string> {
+        let freshList: Array<string> = []
         let listDir = fs.readdirSync(path)
-       
-        if(listException != undefined && listException.length > 0)
-        {
-            for(var i = 0; i< listDir.length;i++)
-            {
-                if(listException.indexOf(listDir[i]) == -1)
-                {
+
+        if (listException != undefined && listException.length > 0) {
+            for (var i = 0; i < listDir.length; i++) {
+                if (listException.indexOf(listDir[i]) == -1) {
                     freshList.push(listDir[i])
                 }
             }
@@ -74,29 +74,25 @@ export default class FilesUtils {
         return freshList;
     }
 
-    static async createArchive(fullPath: string, listDir: Array<string>, archiveName : string, typeArchive: archiver.Format ) 
-    {
-        try
-        {
-            var output = fs.createWriteStream(fullPath+archiveName+"."+typeArchive);
-            var archive = archiver(typeArchive, 
-            {
-                zlib: { level: 9 } // Sets the compression level.
-            });
-            output.on('close', function() {
+    static async createArchive(fullPath: string, listDir: Array<string>, archiveName: string, typeArchive: archiver.Format) {
+        try {
+            var output = fs.createWriteStream(fullPath + archiveName + "." + typeArchive);
+            var archive = archiver(typeArchive,
+                {
+                    zlib: { level: 9 } // Sets the compression level.
+                });
+            output.on('close', function () {
                 console.log('Archive has been created');
                 process.exit();
             });
             await archive.pipe(output)
-            await listDir.map(function(element)
-            {
+            await listDir.map(function (element) {
                 archive.glob(element)
             })
             archive.finalize()
         }
-        catch(err)
-        {
-            console.log("Error while trying to create archive : " +err)
+        catch (err) {
+            console.log("Error while trying to create archive : " + err)
         }
     }
 }

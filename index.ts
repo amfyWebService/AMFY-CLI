@@ -22,26 +22,23 @@ async function init() {
         .option("--tar")
         .option("--zip")
         .option("-d, --dir <dir>")
-        .action(function(name :any ,args : any)
-          {
-            let type : archiver.Format = args.tar ? "tar" : "zip"
-            let exp : Exports = new Exports()
-            args.dir ? exp.pathArchive = args.dir : exp.pathArchive = process.cwd()+"/"
-            exp.exportToServer(name,type) 
-          })
+        .action(function (name: any, args: any) {
+            let type: archiver.Format = args.tar ? "tar" : "zip"
+            let exp: Exports = new Exports()
+            args.dir ? exp.pathArchive = args.dir : exp.pathArchive = process.cwd() + "/"
+            exp.exportToServer(name, type)
+        })
 
     command.command("init <projectName>")
         .description('Model generator')
         .option("-w, --withcontroller <controllerName>")
         .action(async (projectName: any, options: any) => {
             await GitUtils.clone(url, projectName, optionsBasePull) // cut the execution if failed , no need to handle error, we want this behaviour
-            exec('cd ' + projectName, (err, stdout) => {
-                if(err) throw new Error('Error : ' + err);
 
-                if (options.withcontroller)
-                    ControllerGenerator.createController(options.withcontroller, true, projectName)
-            });
-            
+            if (options.withcontroller)
+                ControllerGenerator.createController(options.withcontroller, true, projectName)
+
+
         });
 
     command.command("controller-add <name>")
@@ -50,9 +47,9 @@ async function init() {
             ControllerGenerator.createController(templateName)
         })
 
-        new Orm(command);
-    
-        command.parse(process.argv);
+    new Orm(command);
+
+    command.parse(process.argv);
 
 }
 
