@@ -1,0 +1,20 @@
+export class {{entityName}} {
+
+    id: number;
+
+    {% for prop in properties %}
+    
+        {{prop.name}}: {{propType(prop.type)}};
+
+    {% endfor %}
+}
+
+{% macro propType(type) %}
+    {% if(type == 'double') %}
+        number
+    {% elseif(prop.type == 'text') %}
+        string
+    {% else %}
+        {{type}}
+    {% endif %}
+{% endmacro %}

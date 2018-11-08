@@ -1,4 +1,6 @@
 import commander from "commander";
+import { EntityGenerator } from "./utils/EntityGenerator";
+import { IEntityPropertiesType } from "./utils/IEntity";
 
 export class Orm {
     constructor() {
@@ -14,7 +16,11 @@ export class Orm {
 
 
         commander
-            .command('add', 'Generator model');
+            .command('toto')
+            .description('Model generator')
+            .action(async () => {
+                EntityGenerator.generate({entityName: 'user', properties: [{name: 'name', type: IEntityPropertiesType.TEXT}]})
+            })
 
 
         commander.parse(process.argv);
