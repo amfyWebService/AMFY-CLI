@@ -1,4 +1,4 @@
-# ANFY-CLI a cli for the AMFY Framework
+# ANFY-CLI a cli for the AMFY Framework [![npm version](https://badge.fury.io/js/amfy-cli.svg)](https://badge.fury.io/js/amfy-cli)
 
 This CLI provide a lot of command for the Framework AMFY that allow you to init the project
 
