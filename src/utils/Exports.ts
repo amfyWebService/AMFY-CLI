@@ -2,23 +2,26 @@ import * as fs from "fs"
 import FilesUtils from "./FilesUtils";
 import * as archiver from "archiver"
 
+const pathConfig : string = process.cwd()+"\\config\\config.json"
+
 export class Exports
 {
     excludedDir : Array<string> = new Array<string>()
     excludedFile : Array<string> = new Array<string>()
+    pathArchive: string = ""
 
     constructor()
     {
         try
         {
-            let output = fs.readFileSync(process.cwd()+"/config.json")
+            let output = fs.readFileSync(pathConfig)
             let myJson = JSON.parse(output.toString())
             this.excludedDir = myJson.Exclude.directory
             this.excludedFile = myJson.Exclude.files
         }
         catch(err)
         {
-            console.log("cannot find file " + process.cwd()+"/config.json")
+            console.log("cannot find file : "+ pathConfig)
         }          
     }
     private getAllExcludedFiles(): Array<string>
@@ -27,7 +30,7 @@ export class Exports
     }
     public exportToServer( archiveName : string = "exportApp", typeArchive: archiver.Format): void
     {
-        FilesUtils.createArchive(process.cwd(),FilesUtils.getDirectoryListForBuild(process.cwd()+"/",this.getAllExcludedFiles()), archiveName, typeArchive)
+        FilesUtils.createArchive(this.pathArchive,FilesUtils.getDirectoryListForBuild(process.cwd()+"/",this.getAllExcludedFiles()), archiveName, typeArchive)
     }
     
 } 

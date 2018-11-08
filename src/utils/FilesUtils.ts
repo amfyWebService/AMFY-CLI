@@ -85,20 +85,27 @@ export default class FilesUtils
 
     static async createArchive(fullPath: string, listDir: Array<string>, archiveName : string, typeArchive: archiver.Format ) 
     {
-        var output = fs.createWriteStream(process.cwd() + '/'+archiveName+"."+typeArchive);
-        var archive = archiver(typeArchive, 
+        try
         {
-            zlib: { level: 9 } // Sets the compression level.
-        });
-        output.on('close', function() {
-            console.log('Archive has been created');
-            process.exit();
-          });
-          await archive.pipe(output)
-          await listDir.map(function(element)
-          {
-            archive.glob(element)
-          })
-          archive.finalize()
+            var output = fs.createWriteStream(fullPath+archiveName+"."+typeArchive);
+            var archive = archiver(typeArchive, 
+            {
+                zlib: { level: 9 } // Sets the compression level.
+            });
+            output.on('close', function() {
+                console.log('Archive has been created');
+                process.exit();
+            });
+            await archive.pipe(output)
+            await listDir.map(function(element)
+            {
+                archive.glob(element)
+            })
+            archive.finalize()
+        }
+        catch(err)
+        {
+            console.log("Error while trying to create archive : " +err)
+        }
     }
 }

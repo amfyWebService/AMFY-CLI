@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-let fs = require("fs")
-
 require('ts-node').register({"compilerOptions": {
     "target": "es2017",
     "module": "commonjs",

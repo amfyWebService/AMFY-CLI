@@ -16,23 +16,23 @@ const listOfTemplateVar: Array<Object> = []
 const url: string = "https://github.com/amfyWebService/AMFY"
 const pathControllerTemplate: string = __dirname+"\\template\\controllerTemplate.template"
 const pathControllerDir: string = "\\src\\controllers\\"
-const optionsBasePull: object = {checkoutBranch:"develop"};
+const optionsBasePull: object = {};
 
 
 async function init() {
   let command : any  = new commander.Command()
-command.command("export")
+command.command("export <fileName>")
           .description("Export file ")
-          .option("-n, --name <value>", "name of the archive")
           .option("--tar")
           .option("--zip")
-          .action(function(args : any)
+          .option("-d, --dir <dir>")
+          .action(function(name :any ,args : any)
           {
+            console.log(args.dir)
             let type : archiver.Format = args.tar ? "tar" : "zip"
-            let name : string = args.name ? args.name : "exportApp"
             let exp : Exports = new Exports()
-            exp.exportToServer(name,type)
-            
+            args.dir ? exp.pathArchive = args.dir : exp.pathArchive = process.cwd()+"/"
+            exp.exportToServer(name,type) 
           })
 
   command.command("init <projectName>")
